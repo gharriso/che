@@ -219,7 +219,7 @@ public class ConsolesPanelPresenter extends BasePresenter implements ConsolesPan
 
     @Override
     public void onMachineRunning(MachineStateEvent event) {
-        workspaceAgent.setActivePart(this);
+//        workspaceAgent.setActivePart(this);
 
         machineService.getMachine(event.getMachineId()).then(new Operation<MachineDto>() {
             @Override
@@ -358,7 +358,7 @@ public class ConsolesPanelPresenter extends BasePresenter implements ConsolesPan
         updateCommandOutput(commandId, outputConsole);
 
         resfreshStopButtonState(commandId);
-        workspaceAgent.setActivePart(this);
+//        workspaceAgent.setActivePart(this);
     }
 
     private void updateCommandOutput(@NotNull final String command, @NotNull OutputConsole outputConsole) {
@@ -380,7 +380,7 @@ public class ConsolesPanelPresenter extends BasePresenter implements ConsolesPan
      * Opens new terminal for the selected machine.
      */
     public void newTerminal() {
-        workspaceAgent.setActivePart(this);
+//        workspaceAgent.setActivePart(this);
 
         if (selectedTreeNode == null) {
             if (appContext.getDevMachine() != null) {
