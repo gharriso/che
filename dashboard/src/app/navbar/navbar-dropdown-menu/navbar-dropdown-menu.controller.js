@@ -21,8 +21,9 @@ export class NavbarDropdownMenuController {
    * Default constructor that is using resource
    * @ngInject for Dependency injection
    */
-  constructor($window) {
+  constructor($window, $log) {
     this.$window = $window;
+    this.$log = $log;
 
     this.offset = angular.isUndefined(this.offset) ? '0 0' : this.offset;
   }
@@ -35,6 +36,7 @@ export class NavbarDropdownMenuController {
    * @param item {Object} the dropdown-menu item which was clicked on
    */
   process(item) {
+    this.$log.log('!!!!! Click on dropdown-menu item !!!!! item.url = ' + item.url, item);
     if (item.url) {
       this.redirect(item.url);
       return;
@@ -46,6 +48,7 @@ export class NavbarDropdownMenuController {
   }
 
   redirect(newPath) {
+    this.$log.log('!!!!! redirect(click on dropdown-menu item) !!!!! newPath = ' + newPath);
     if (!newPath || this.isDisabled) {
       return;
     }

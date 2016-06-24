@@ -177,9 +177,11 @@ export class NavbarRecentWorkspacesController {
    */
   runRecentWorkspace(workspaceId) {
     let workspace = this.cheWorkspace.getWorkspaceById(workspaceId);
-
+    this.$log.log('!!!!! Run recent workspace !!!!!!' , workspace);
     this.updateRecentWorkspace(workspaceId);
-    this.cheWorkspace.startWorkspace(workspace.id, workspace.config.defaultEnv).then(() => {}, (error) => {
+    this.cheWorkspace.startWorkspace(workspace.id, workspace.config.defaultEnv).then(() => {
+      this.$log.log('!!!!! Start workspace !!!!!');
+    }, (error) => {
       this.$log.error(error);
     });
   }

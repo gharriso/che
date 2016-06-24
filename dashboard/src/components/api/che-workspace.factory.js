@@ -23,18 +23,20 @@ export class CheWorkspace {
    * Default constructor that is using resource
    * @ngInject for Dependency injection
    */
-  constructor ($resource, $q, cheWebsocket, lodash) {
+  constructor ($resource, $q, cheWebsocket, lodash, $log) {
     // keep resource
     this.$resource = $resource;
     this.$q = $q;
     this.lodash = lodash;
     this.cheWebsocket = cheWebsocket;
+    this.$log = $log;
 
     // current list of workspaces
     this.workspaces = [];
 
     // per Id
     this.workspacesById = new Map();
+    this.$log.log('!!!!! New workspaces map !!!!!');
 
     //Workspace agents per workspace id:
     this.workspaceAgents = new Map();
@@ -143,12 +145,14 @@ export class CheWorkspace {
       angular.copy(this.workspacesById, copyWorkspaceById);
 
       this.workspacesById.clear();
+      this.$log.log('!!!!! Clear workspaces !!!!!');
       // add workspace if not temporary
       data.forEach((workspace) => {
 
         if (!workspace.config.temporary) {
           remoteWorkspaces.push(workspace);
           this.workspaces.push(workspace);
+          this.$log.log('!!!!! Add workspace !!!!! workspaceId='+ workspace.id, workspace);
           this.workspacesById.set(workspace.id, workspace);
         }
         this.startUpdateWorkspaceStatus(workspace.id);
@@ -176,6 +180,7 @@ export class CheWorkspace {
     let promise = this.remoteWorkspaceAPI.getDetails({workspaceId : workspaceId}).$promise;
     promise.then((data) => {
       this.workspacesById.set(workspaceId, data);
+      this.$log.log('!!!!! Add workspace !!!!! workspaceId='+ workspaceId, data);
       this.startUpdateWorkspaceStatus(workspaceId);
       defer.resolve();
     }, (error) => {
